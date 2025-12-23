@@ -1,4 +1,3 @@
-нелвикс, [23.12.2025 17:34]
 <!DOCTYPE html>
 <html lang="uk">
 <head>
@@ -83,7 +82,7 @@
             </div>
             <div class="form-group">
 
-нелвикс, [23.12.2025 17:34]
+нелвикс, [23.12.2025 17:37]
 <label for="review-title">Заголовок відгуку</label>
                 <input type="text" id="review-title" placeholder="Короткий заголовок">
             </div>
@@ -170,3 +169,338 @@
                 <span id="cart-total-price">0 ₴</span>
             </div>
             <button id="checkout-btn" class="checkout-btn">Оформити замовлення</button>
+
+нелвикс, [23.12.2025 17:37]
+<p class="cart-demo-note">Це демонстраційна корзина. Товари не можна реально придбати.</p>
+        </div>
+    </div>
+
+    <main class="main">
+        <div class="container">
+            <!-- Герой-баннер -->
+            <section class="hero">
+                <div class="hero-content">
+                    <h1 class="hero-title">Інноваційна техніка для сучасного життя</h1>
+                    <p class="hero-subtitle">Відкрийте для себе світ високотехнологічних пристроїв</p>
+                    <a href="#products" class="hero-btn">Переглянути каталог</a>
+                </div>
+                <div class="hero-image">
+                    <div class="floating-device">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <div class="floating-device">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="floating-device">
+                        <i class="fas fa-headphones"></i>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Категории товаров -->
+            <section class="categories">
+                <h2 class="section-title">Категорії товарів</h2>
+                <div class="categories-grid">
+                    <div class="category-card" data-category="laptops">
+                        <div class="category-icon">
+                            <i class="fas fa-laptop"></i>
+                        </div>
+                        <h3>Ноутбуки</h3>
+                        <p>Потужні та портативні</p>
+                    </div>
+                    <div class="category-card" data-category="phones">
+                        <div class="category-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3>Смартфони</h3>
+                        <p>Розумні комунікатори</p>
+                    </div>
+                    <div class="category-card" data-category="tablets">
+                        <div class="category-icon">
+                            <i class="fas fa-tablet-alt"></i>
+                        </div>
+                        <h3>Планшети</h3>
+                        <p>Для роботи та розваг</p>
+                    </div>
+                    <div class="category-card" data-category="audio">
+                        <div class="category-icon">
+                            <i class="fas fa-headphones"></i>
+                        </div>
+                        <h3>Аудіотехніка</h3>
+                        <p>Чистий звук</p>
+                    </div>
+                    <div class="category-card" data-category="home-tech">
+                        <div class="category-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <h3>Побутова техніка</h3>
+                        <p>Для дому та офісу</p>
+                    </div>
+                    <div class="category-card" data-category="gadgets">
+                        <div class="category-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <h3>Гаджети</h3>
+                        <p>Інноваційні пристрої</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Фильтры и товары -->
+            <section class="products-section" id="products">
+                <div class="section-header">
+                    <h2 class="section-title">Каталог товарів</h2>
+                    <div class="view-controls">
+                        <span>Сортувати:</span>
+                        <select id="sort-select">
+                            <option value="default">За замовчуванням</option>
+                            <option value="price-low">Від дешевих до дорогих</option>
+                            <option value="price-high">Від дорогих до дешевих</option>
+                            <option value="popular">За популярністю</option>
+                        </select>
+
+нелвикс, [23.12.2025 17:37]
+</div>
+                </div>
+                
+                <div class="products-container">
+                    <!-- Боковая панель фильтров -->
+                    <aside class="filters-sidebar">
+                        <div class="filter-group">
+                            <h3>Категорія</h3>
+                            <div class="filter-options">
+                                <label class="filter-option">
+                                    <input type="checkbox" name="category" value="laptop" checked>
+                                    <span>Ноутбуки</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" name="category" value="phone" checked>
+                                    <span>Смартфони</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" name="category" value="tablet" checked>
+                                    <span>Планшети</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" name="category" value="audio" checked>
+                                    <span>Аудіо</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" name="category" value="home" checked>
+                                    <span>Побутова техніка</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <h3>Ціна, ₴</h3>
+                            <div class="price-range">
+                                <div class="price-inputs">
+                                    <input type="number" id="price-min" placeholder="5000" min="0" value="5000">
+                                    <span>-</span>
+                                    <input type="number" id="price-max" placeholder="50000" min="0" value="50000">
+                                </div>
+                                <div class="price-slider">
+                                    <input type="range" id="price-slider-min" min="0" max="100000" value="5000" step="1000">
+                                    <input type="range" id="price-slider-max" min="0" max="100000" value="50000" step="1000">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <h3>Бренд</h3>
+                            <div class="filter-options">
+                                <label class="filter-option">
+                                    <input type="checkbox" name="brand" value="apple" checked>
+                                    <span>Apple</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" name="brand" value="samsung" checked>
+                                    <span>Samsung</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" name="brand" value="xiaomi" checked>
+                                    <span>Xiaomi</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" name="brand" value="asus" checked>
+                                    <span>Asus</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" name="brand" value="lenovo" checked>
+
+нелвикс, [23.12.2025 17:37]
+<span>Lenovo</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" name="brand" value="sony" checked>
+                                    <span>Sony</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <h3>Рейтинг</h3>
+                            <div class="filter-options">
+                                <label class="filter-option">
+                                    <input type="radio" name="rating" value="4">
+                                    <span class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i> та вище
+                                    </span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="radio" name="rating" value="3">
+                                    <span class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i> та вище
+                                    </span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="radio" name="rating" value="all" checked>
+                                    <span>Будь-який рейтинг</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <button id="apply-filters" class="apply-filters-btn">Застосувати фільтри</button>
+                        <button id="reset-filters" class="reset-filters-btn">Скинути фільтри</button>
+                    </aside>
+                    
+                    <!-- Сетка товаров -->
+                    <div class="products-grid" id="products-grid">
+                        <!-- Товары будут вставлены сюда через JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="pagination">
+                    <button class="pagination-btn active">1</button>
+                    <button class="pagination-btn">2</button>
+                    <button class="pagination-btn">3</button>
+                    <span class="pagination-dots">...</span>
+                    <button class="pagination-btn">5</button>
+                </div>
+            </section>
+            
+            <!-- Страница оформления заказа (скрыта по умолчанию) -->
+            <section id="checkout-page" class="checkout-page" style="display: none;">
+                <div class="checkout-container">
+                    <h2 class="section-title">Оформлення замовлення</h2>
+                    <div class="checkout-message">
+                        <div class="message-icon">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                        <h3>Дякуємо за інтерес до нашого демонстраційного магазину!</h3>
+                        <div class="message-content">
+                            <p>Цей сайт є <strong>демонстраційною версією</strong> інтернет-магазину, створеною виключно для презентації дизайнерських та фронтенд-можливостей.</p>
+                            
+                            <div class="features-list">
+
+нелвикс, [23.12.2025 17:37]
+<h4>Демонстровані функції:</h4>
+                                <ul>
+                                    <li><i class="fas fa-check"></i> Повнофункціональний інтерфейс з фільтрами та пошуком</li>
+                                    <li><i class="fas fa-check"></i> Динамічна корзина з додаванням/видаленням товарів</li>
+                                    <li><i class="fas fa-check"></i> Система обрання товарів (лайків)</li>
+                                    <li><i class="fas fa-check"></i> Вибір кольору та характеристик товарів</li>
+                                    <li><i class="fas fa-check"></i> Система відгуків та рейтингів</li>
+                                    <li><i class="fas fa-check"></i> Імітація особистого кабінету з авторизацією</li>
+                                    <li><i class="fas fa-check"></i> Адаптивний дизайн для мобільних пристроїв</li>
+                                    <li><i class="fas fa-check"></i> Плавні анімації та інтерактивні елементи</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="cherryweb-info">
+                                <h4><i class="fas fa-code"></i> Цей демо-сайт створено <span class="company-name">CherryWebCmp</span></h4>
+                                <p>Ми спеціалізуємося на створенні сучасних, інтуїтивних та високопродуктивних веб-рішень для вашого бізнесу.</p>
+                                <div class="contact-info">
+                                    <p><i class="fas fa-envelope"></i> contact@cherrywebcmp.com</p>
+                                    <p><i class="fas fa-phone"></i> +380 (XX) XXX-XX-XX</p>
+                                </div>
+                            </div>
+                            
+                            <div class="action-buttons">
+                                <button id="back-to-shop" class="back-to-shop-btn">Повернутися до магазину</button>
+                                <button id="view-cart-again" class="view-cart-btn">Переглянути кошик</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <div class="logo">
+                        <i class="fas fa-laptop-code"></i>
+                        <span class="logo-text">Tech<span class="logo-highlight">Store</span></span>
+                        <span class="logo-subtitle">Demo</span>
+                    </div>
+                    <p class="footer-description">
+                        Демонстраційний сайт інтернет-магазину техніки, створений для презентації веб-розробки.
+                    </p>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Категорії</h3>
+                        <ul>
+                            <li><a href="#laptops">Ноутбуки</a></li>
+                            <li><a href="#phones">Смартфони</a></li>
+                            <li><a href="#tablets">Планшети</a></li>
+                            <li><a href="#audio">Аудіотехніка</a></li>
+                            <li><a href="#home-tech">Побутова техніка</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h3>Корисне</h3>
+                        <ul>
+                            <li><a href="#" id="footer-about">Про проект</a></li>
+                            <li><a href="#" id="footer-contact">Контакти</a></li>
+                            <li><a href="#" id="footer-faq">FAQ</a></li>
+                            <li><a href="#" id="footer-demo">Демо-можливості</a></li>
+                        </ul>
+                    </div>
+
+нелвикс, [23.12.2025 17:37]
+<div class="footer-column">
+                        <h3>Розробник</h3>
+                        <div class="developer-info">
+                            <h4><i class="fas fa-code"></i> CherryWebCmp</h4>
+                            <p>Студія веб-розробки та дизайну</p>
+                            <p>Сучасні рішення для вашого бізнесу</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-disclaimer">
+                    <h3><i class="fas fa-info-circle"></i> Важлива інформація</h3>
+                    <p>
+                        <strong>Цей сайт є демонстраційним проектом</strong>, створеним виключно в цілях презентації дизайнерських та фронтенд-можливостей студії <strong>CherryWebCmp</strong>. 
+                        Усі функції (пошук, фільтрація, додавання до кошика, відгуки, авторизація) працюють лише на стороні клієнта та не пов'язані з реальним сервером або базою даних. 
+                        Товари не можна реально придбати, а всі транзакції є імітацією. Сайт створено для демонстрації навичок веб-розробки.
+                    </p>
+                </div>
+                
+                <div class="copyright">
+                    <p>&copy; 2023 <span class="company-name">CherryWebCmp</span>. Демонстраційний проект. Всі права захищені.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
