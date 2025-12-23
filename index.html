@@ -3,23 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ElectroStore | Демо-магазин електроніки</title>
+    <title>ElectroTech | Демо-магазин електроніки</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #818cf8;
             --secondary: #10b981;
-            --dark: #1f2937;
-            --light: #f9fafb;
-            --gray: #6b7280;
-            --gray-light: #e5e7eb;
+            --secondary-dark: #059669;
+            --accent: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --gray-light: #e2e8f0;
+            --gray-dark: #475569;
             --danger: #ef4444;
+            --success: #10b981;
             --warning: #f59e0b;
-            --border-radius: 8px;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --transition: all 0.3s ease;
+            --border-radius: 12px;
+            --border-radius-sm: 8px;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         * {
@@ -28,40 +38,83 @@
             box-sizing: border-box;
         }
         
+        html {
+            scroll-behavior: smooth;
+        }
+        
         body {
             font-family: 'Inter', sans-serif;
             color: var(--dark);
             background-color: #f8fafc;
             line-height: 1.6;
+            overflow-x: hidden;
         }
         
         .container {
             width: 100%;
             max-width: 1400px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 24px;
         }
         
         /* Header & Navigation */
         header {
-            background-color: white;
+            background-color: rgba(255, 255, 255, 0.95);
             box-shadow: var(--shadow);
             position: sticky;
             top: 0;
             z-index: 100;
+            backdrop-filter: blur(10px);
+            animation: slideDown 0.5s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
         
         .top-bar {
-            background-color: var(--dark);
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
             color: white;
             padding: 8px 0;
             font-size: 0.9rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .top-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+        }
+        
+        .top-bar:hover::before {
+            animation: shimmer 1.5s infinite;
+        }
+        
+        @keyframes shimmer {
+            100% {
+                transform: translateX(100%);
+            }
         }
         
         .top-bar .container {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
+            z-index: 1;
         }
         
         .main-header {
@@ -78,15 +131,35 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             font-size: 1.8rem;
             font-weight: 700;
             color: var(--primary);
             text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+            transition: var(--transition);
+        }
+        
+        .logo:hover {
+            transform: scale(1.02);
         }
         
         .logo i {
             color: var(--secondary);
+            font-size: 2rem;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
         }
         
         .search-bar {
@@ -97,34 +170,41 @@
         
         .search-bar input {
             width: 100%;
-            padding: 14px 20px;
+            padding: 16px 24px;
             border: 1px solid var(--gray-light);
-            border-radius: var(--border-radius);
+            border-radius: 50px;
             font-size: 1rem;
             outline: none;
             transition: var(--transition);
+            background-color: #f8fafc;
+            box-shadow: var(--shadow-sm);
         }
         
         .search-bar input:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+            background-color: white;
         }
         
         .search-bar button {
             position: absolute;
-            right: 5px;
-            top: 5px;
-            background-color: var(--primary);
+            right: 6px;
+            top: 6px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
             color: white;
             border: none;
-            border-radius: var(--border-radius);
-            padding: 9px 20px;
+            border-radius: 50px;
+            padding: 10px 24px;
             cursor: pointer;
             transition: var(--transition);
+            font-weight: 600;
+            box-shadow: var(--shadow-sm);
         }
         
         .search-bar button:hover {
-            background-color: var(--primary-dark);
+            background: linear-gradient(90deg, var(--primary-dark) 0%, var(--primary) 100%);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
         }
         
         .user-actions {
@@ -141,33 +221,49 @@
             color: var(--dark);
             font-size: 0.85rem;
             transition: var(--transition);
+            position: relative;
         }
         
         .action-item:hover {
             color: var(--primary);
+            transform: translateY(-2px);
         }
         
         .action-item i {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             margin-bottom: 4px;
         }
         
-        .cart-count {
+        .cart-count, .compare-count {
             background-color: var(--danger);
             color: white;
             border-radius: 50%;
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 0.7rem;
+            font-weight: 600;
             position: absolute;
             top: -5px;
-            right: -5px;
+            right: 0;
+            animation: popIn 0.3s ease-out;
         }
         
-        .cart-container {
+        @keyframes popIn {
+            0% {
+                transform: scale(0);
+            }
+            70% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        .cart-container, .compare-container {
             position: relative;
         }
         
@@ -175,14 +271,16 @@
         .categories {
             background-color: white;
             border-bottom: 1px solid var(--gray-light);
+            position: relative;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
         
         .categories-list {
             display: flex;
             list-style: none;
             padding: 15px 0;
-            overflow-x: auto;
-            gap: 25px;
+            gap: 30px;
         }
         
         .categories-list li a {
@@ -191,8 +289,9 @@
             font-weight: 500;
             white-space: nowrap;
             transition: var(--transition);
-            padding: 5px 0;
+            padding: 8px 0;
             position: relative;
+            display: inline-block;
         }
         
         .categories-list li a:hover,
@@ -200,26 +299,58 @@
             color: var(--primary);
         }
         
-        .categories-list li a.active::after {
+        .categories-list li a::after {
             content: '';
             position: absolute;
             bottom: -15px;
             left: 0;
-            width: 100%;
+            width: 0;
             height: 3px;
-            background-color: var(--primary);
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: 3px;
+            transition: var(--transition);
+        }
+        
+        .categories-list li a:hover::after,
+        .categories-list li a.active::after {
+            width: 100%;
         }
         
         /* Main Content */
         main {
-            padding: 30px 0;
+            padding: 40px 0;
             min-height: calc(100vh - 300px);
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
         
         .page-title {
-            font-size: 2rem;
-            margin-bottom: 25px;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
             color: var(--dark);
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: 2px;
         }
         
         .content-wrapper {
@@ -229,21 +360,28 @@
         
         /* Filters Sidebar */
         .filters-sidebar {
-            width: 280px;
+            width: 300px;
             flex-shrink: 0;
         }
         
         .filter-section {
             background-color: white;
             border-radius: var(--border-radius);
-            padding: 20px;
-            margin-bottom: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
             box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+        
+        .filter-section:hover {
+            border-color: var(--primary-light);
+            box-shadow: var(--shadow-lg);
         }
         
         .filter-title {
             font-size: 1.2rem;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -260,19 +398,33 @@
             background: none;
             border: none;
             font-family: inherit;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 5px 10px;
+            border-radius: var(--border-radius-sm);
+        }
+        
+        .reset-filters:hover {
+            background-color: #f1f5f9;
         }
         
         .filter-option {
             margin-bottom: 12px;
             display: flex;
             align-items: center;
+            transition: var(--transition-fast);
+        }
+        
+        .filter-option:hover {
+            transform: translateX(5px);
         }
         
         .filter-option input[type="checkbox"],
         .filter-option input[type="radio"] {
-            margin-right: 10px;
+            margin-right: 12px;
             width: 18px;
             height: 18px;
+            cursor: pointer;
         }
         
         .filter-option label {
@@ -289,13 +441,22 @@
             align-items: center;
             justify-content: space-between;
             margin-top: 15px;
+            gap: 10px;
         }
         
         .price-inputs input {
             width: 45%;
-            padding: 8px 12px;
+            padding: 10px 12px;
             border: 1px solid var(--gray-light);
-            border-radius: var(--border-radius);
+            border-radius: var(--border-radius-sm);
+            font-family: inherit;
+            outline: none;
+            transition: var(--transition);
+        }
+        
+        .price-inputs input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
         }
         
         /* Products Grid */
@@ -307,22 +468,32 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
         }
         
         .sort-by select {
-            padding: 10px 15px;
+            padding: 12px 20px;
             border: 1px solid var(--gray-light);
-            border-radius: var(--border-radius);
+            border-radius: var(--border-radius-sm);
             font-family: inherit;
             outline: none;
             cursor: pointer;
+            transition: var(--transition);
+            background-color: white;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .sort-by select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
         }
         
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
         }
         
         .product-card {
@@ -332,85 +503,133 @@
             box-shadow: var(--shadow);
             transition: var(--transition);
             position: relative;
+            animation: cardAppear 0.5s ease-out;
+            animation-fill-mode: both;
+            border: 1px solid transparent;
+        }
+        
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-light);
         }
         
         .product-image {
-            height: 220px;
+            height: 240px;
             background-color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 24px;
             border-bottom: 1px solid var(--gray-light);
+            position: relative;
+            overflow: hidden;
         }
         
         .product-image img {
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
+            transition: var(--transition);
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
         }
         
         .product-badge {
             position: absolute;
             top: 15px;
             left: 15px;
-            background-color: var(--secondary);
+            background: linear-gradient(90deg, var(--secondary) 0%, var(--secondary-dark) 100%);
             color: white;
-            padding: 5px 10px;
-            border-radius: 4px;
+            padding: 6px 12px;
+            border-radius: 20px;
             font-size: 0.8rem;
             font-weight: 600;
+            z-index: 2;
+            box-shadow: var(--shadow-sm);
         }
         
-        .product-wishlist {
+        .product-new {
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+        }
+        
+        .product-wishlist, .product-compare {
             position: absolute;
-            top: 15px;
-            right: 15px;
             background-color: white;
-            width: 36px;
-            height: 36px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
             transition: var(--transition);
+            z-index: 2;
         }
         
-        .product-wishlist:hover {
+        .product-wishlist {
+            top: 15px;
+            right: 15px;
+        }
+        
+        .product-compare {
+            top: 65px;
+            right: 15px;
+        }
+        
+        .product-wishlist:hover,
+        .product-compare:hover {
+            background-color: #f1f5f9;
+            transform: scale(1.1);
+        }
+        
+        .product-wishlist.active,
+        .product-compare.active {
             background-color: #fee2e2;
             color: var(--danger);
         }
         
-        .product-wishlist.active {
-            background-color: #fee2e2;
-            color: var(--danger);
+        .product-compare.active {
+            background-color: #dbeafe;
+            color: var(--primary);
         }
         
         .product-info {
-            padding: 20px;
+            padding: 24px;
         }
         
         .product-category {
             color: var(--gray);
             font-size: 0.85rem;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            font-weight: 500;
         }
         
         .product-name {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 600;
-            margin-bottom: 10px;
-            height: 50px;
+            margin-bottom: 12px;
+            height: 60px;
             overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
         }
         
         .product-rating {
@@ -422,6 +641,8 @@
         .stars {
             color: var(--warning);
             margin-right: 8px;
+            display: flex;
+            gap: 2px;
         }
         
         .rating-count {
@@ -430,17 +651,18 @@
         }
         
         .product-price {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 700;
             color: var(--dark);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         
         .product-old-price {
-            font-size: 1rem;
+            font-size: 1.1rem;
             color: var(--gray);
             text-decoration: line-through;
             margin-right: 10px;
+            font-weight: 500;
         }
         
         .product-actions {
@@ -449,8 +671,8 @@
         }
         
         .btn {
-            padding: 12px 20px;
-            border-radius: var(--border-radius);
+            padding: 14px 24px;
+            border-radius: var(--border-radius-sm);
             border: none;
             font-family: inherit;
             font-weight: 600;
@@ -463,13 +685,15 @@
         }
         
         .btn-primary {
-            background-color: var(--primary);
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
             color: white;
             flex: 1;
         }
         
         .btn-primary:hover {
-            background-color: var(--primary-dark);
+            background: linear-gradient(90deg, var(--primary-dark) 0%, var(--primary) 100%);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
         }
         
         .btn-outline {
@@ -481,31 +705,114 @@
         
         .btn-outline:hover {
             background-color: #eff6ff;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        .btn-success {
+            background: linear-gradient(90deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: linear-gradient(90deg, var(--secondary-dark) 0%, var(--secondary) 100%);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
         }
         
         /* Pagination */
         .pagination {
             display: flex;
             justify-content: center;
-            margin-top: 40px;
+            margin-top: 50px;
             gap: 8px;
         }
         
         .pagination button {
-            width: 40px;
-            height: 40px;
-            border-radius: var(--border-radius);
+            width: 44px;
+            height: 44px;
+            border-radius: var(--border-radius-sm);
             border: 1px solid var(--gray-light);
             background-color: white;
             cursor: pointer;
             transition: var(--transition);
+            font-weight: 500;
         }
         
         .pagination button:hover,
         .pagination button.active {
-            background-color: var(--primary);
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
             color: white;
             border-color: var(--primary);
+        }
+        
+        /* Viewed Products */
+        .viewed-products {
+            margin-top: 60px;
+            padding: 30px 0;
+        }
+        
+        .viewed-products h2 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: var(--dark);
+            font-weight: 600;
+        }
+        
+        .viewed-products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .viewed-product-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .viewed-product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+        
+        .viewed-product-image {
+            height: 150px;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        
+        .viewed-product-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .viewed-product-info {
+            padding: 15px;
+        }
+        
+        .viewed-product-name {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            height: 40px;
+        }
+        
+        .viewed-product-price {
+            font-weight: 700;
+            color: var(--primary);
         }
         
         /* Modal */
@@ -516,10 +823,12 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.7);
             z-index: 1000;
             align-items: center;
             justify-content: center;
+            animation: fadeIn 0.3s ease-out;
+            backdrop-filter: blur(5px);
         }
         
         .modal.active {
@@ -530,29 +839,55 @@
             background-color: white;
             border-radius: var(--border-radius);
             width: 90%;
-            max-width: 800px;
+            max-width: 900px;
             max-height: 90vh;
             overflow-y: auto;
             position: relative;
+            animation: modalAppear 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
         }
         
         .modal-close {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            background: none;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
             border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             font-size: 1.5rem;
             cursor: pointer;
-            color: var(--gray);
+            transition: var(--transition);
             z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark);
+            box-shadow: var(--shadow);
+        }
+        
+        .modal-close:hover {
+            background-color: white;
+            transform: rotate(90deg);
         }
         
         .modal-product-detail {
-            padding: 30px;
+            padding: 40px;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 30px;
+            gap: 40px;
         }
         
         .modal-product-image {
@@ -560,67 +895,136 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 30px;
             border-radius: var(--border-radius);
             border: 1px solid var(--gray-light);
+            box-shadow: var(--shadow-sm);
         }
         
         .modal-product-image img {
             max-width: 100%;
             max-height: 400px;
             object-fit: contain;
+            transition: var(--transition-slow);
+        }
+        
+        .modal-product-image img:hover {
+            transform: scale(1.05);
         }
         
         .modal-product-info h2 {
-            font-size: 1.8rem;
+            font-size: 2rem;
             margin-bottom: 15px;
+            color: var(--dark);
+            font-weight: 700;
         }
         
         .modal-product-price {
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 700;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            color: var(--primary);
         }
         
         .product-description {
             margin-bottom: 25px;
             line-height: 1.7;
+            color: var(--gray-dark);
+        }
+        
+        .product-specs {
+            margin-bottom: 25px;
+        }
+        
+        .product-specs h3 {
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .spec-item {
+            display: flex;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        
+        .spec-label {
+            width: 120px;
+            font-weight: 500;
+            color: var(--gray);
+        }
+        
+        .spec-value {
+            flex: 1;
+            color: var(--dark);
         }
         
         .reviews-section {
-            margin-top: 25px;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid var(--gray-light);
         }
         
         .reviews-section h3 {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: var(--dark);
         }
         
         .review-form textarea {
             width: 100%;
-            padding: 12px;
+            padding: 15px;
             border: 1px solid var(--gray-light);
-            border-radius: var(--border-radius);
-            margin-bottom: 10px;
+            border-radius: var(--border-radius-sm);
+            margin-bottom: 15px;
             font-family: inherit;
+            transition: var(--transition);
+        }
+        
+        .review-form textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
         }
         
         .review-form button {
-            background-color: var(--primary);
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: var(--border-radius);
+            padding: 12px 24px;
+            border-radius: var(--border-radius-sm);
             cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .review-form button:hover {
+            background: linear-gradient(90deg, var(--primary-dark) 0%, var(--primary) 100%);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
         }
         
         .review-item {
             border-top: 1px solid var(--gray-light);
-            padding: 15px 0;
+            padding: 20px 0;
+            animation: fadeInUp 0.5s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         /* Auth Modal */
         .auth-modal .modal-content {
-            max-width: 400px;
+            max-width: 450px;
         }
         
         .auth-tabs {
@@ -630,7 +1034,7 @@
         
         .auth-tab {
             flex: 1;
-            padding: 15px;
+            padding: 20px;
             text-align: center;
             background: none;
             border: none;
@@ -638,66 +1042,219 @@
             font-weight: 600;
             cursor: pointer;
             color: var(--gray);
+            transition: var(--transition);
+            position: relative;
         }
         
         .auth-tab.active {
             color: var(--primary);
-            border-bottom: 3px solid var(--primary);
+        }
+        
+        .auth-tab::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: 3px;
+            transition: var(--transition);
+        }
+        
+        .auth-tab.active::after {
+            width: 100%;
         }
         
         .auth-form {
-            padding: 30px;
+            padding: 40px;
         }
         
         .auth-form h2 {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             text-align: center;
+            color: var(--dark);
+            font-weight: 700;
         }
         
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         
         .form-group label {
             display: block;
             margin-bottom: 8px;
             font-weight: 500;
+            color: var(--dark);
         }
         
         .form-group input {
             width: 100%;
-            padding: 12px 15px;
+            padding: 15px;
             border: 1px solid var(--gray-light);
-            border-radius: var(--border-radius);
+            border-radius: var(--border-radius-sm);
             font-family: inherit;
             outline: none;
             transition: var(--transition);
+            background-color: #f8fafc;
         }
         
         .form-group input:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+            background-color: white;
+        }
+        
+        /* Cart Modal */
+        .cart-modal .modal-content {
+            max-width: 800px;
+        }
+        
+        .cart-content {
+            padding: 40px;
+        }
+        
+        .cart-content h2 {
+            margin-bottom: 25px;
+            color: var(--dark);
+            font-weight: 700;
+        }
+        
+        /* Compare Modal */
+        .compare-modal .modal-content {
+            max-width: 1200px;
+        }
+        
+        .compare-content {
+            padding: 40px;
+        }
+        
+        .compare-content h2 {
+            margin-bottom: 25px;
+            color: var(--dark);
+            font-weight: 700;
+        }
+        
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .compare-table th {
+            background-color: #f1f5f9;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--dark);
+            border-bottom: 2px solid var(--gray-light);
+        }
+        
+        .compare-table td {
+            padding: 15px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        
+        .compare-table tr:hover {
+            background-color: #f8fafc;
+        }
+        
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 20px 25px;
+            box-shadow: var(--shadow-lg);
+            z-index: 10000;
+            transform: translateX(150%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            max-width: 350px;
+            border-left: 5px solid var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .notification.success {
+            border-left-color: var(--success);
+        }
+        
+        .notification.success .notification-icon {
+            background: linear-gradient(90deg, var(--success) 0%, var(--secondary-dark) 100%);
+        }
+        
+        .notification.error {
+            border-left-color: var(--danger);
+        }
+        
+        .notification.error .notification-icon {
+            background: linear-gradient(90deg, var(--danger) 0%, #dc2626 100%);
         }
         
         /* Footer */
         footer {
             background-color: var(--dark);
             color: white;
-            padding: 40px 0 20px;
-            margin-top: 60px;
+            padding: 60px 0 30px;
+            margin-top: 80px;
+            position: relative;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
         }
         
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-bottom: 30px;
+            gap: 40px;
+            margin-bottom: 40px;
         }
         
         .footer-section h3 {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
+            font-size: 1.3rem;
+            margin-bottom: 25px;
             color: white;
+            font-weight: 600;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: 3px;
         }
         
         .footer-section ul {
@@ -705,32 +1262,34 @@
         }
         
         .footer-section ul li {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
         
         .footer-section ul li a {
-            color: #d1d5db;
+            color: #cbd5e1;
             text-decoration: none;
             transition: var(--transition);
+            display: inline-block;
         }
         
         .footer-section ul li a:hover {
             color: white;
+            transform: translateX(5px);
         }
         
         .social-links {
             display: flex;
             gap: 15px;
-            margin-top: 20px;
+            margin-top: 25px;
         }
         
         .social-links a {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: #374151;
+            width: 44px;
+            height: 44px;
+            background-color: #334155;
             border-radius: 50%;
             color: white;
             text-decoration: none;
@@ -738,29 +1297,55 @@
         }
         
         .social-links a:hover {
-            background-color: var(--primary);
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+            transform: translateY(-3px);
         }
         
         .copyright {
             text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid #374151;
-            color: #9ca3af;
+            padding-top: 30px;
+            border-top: 1px solid #334155;
+            color: #94a3b8;
             font-size: 0.9rem;
         }
         
         .demo-notice {
-            background-color: #fef3c7;
+            background: linear-gradient(90deg, #fef3c7 0%, #fef9c3 100%);
             border: 1px solid #f59e0b;
             border-radius: var(--border-radius);
-            padding: 20px;
-            margin-top: 40px;
+            padding: 25px;
+            margin-top: 50px;
             color: #92400e;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            box-shadow: var(--shadow-sm);
+            animation: pulseBorder 2s infinite;
+        }
+        
+        @keyframes pulseBorder {
+            0% {
+                border-color: #f59e0b;
+            }
+            50% {
+                border-color: #fbbf24;
+            }
+            100% {
+                border-color: #f59e0b;
+            }
+        }
+        
+        .demo-notice h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #92400e;
+        }
+        
+        /* Quick View Modal */
+        .quick-view-modal .modal-content {
+            max-width: 1000px;
         }
         
         /* Responsive */
-        @media (max-width: 1100px) {
+        @media (max-width: 1200px) {
             .content-wrapper {
                 flex-direction: column;
             }
@@ -780,6 +1365,17 @@
             }
         }
         
+        @media (max-width: 992px) {
+            .modal-product-detail {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .modal-product-image {
+                height: 300px;
+            }
+        }
+        
         @media (max-width: 768px) {
             .header-content {
                 flex-wrap: wrap;
@@ -796,8 +1392,11 @@
             }
             
             .modal-product-detail {
-                grid-template-columns: 1fr;
-                gap: 20px;
+                padding: 30px;
+            }
+            
+            .cart-content, .compare-content, .auth-form {
+                padding: 30px;
             }
         }
         
@@ -813,6 +1412,14 @@
             .product-actions {
                 flex-direction: column;
             }
+            
+            .modal-content {
+                width: 95%;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -820,7 +1427,7 @@
     <!-- Top Bar -->
     <div class="top-bar">
         <div class="container">
-            <div>Електронний магазин | Демо-версія</div>
+            <div>Демо-магазин електроніки | Усі функції працюють лише на стороні клієнта</div>
             <div>
                 <a href="#" id="login-link" style="color: white; text-decoration: none;">Увійти</a> |
                 <a href="#" id="register-link" style="color: white; text-decoration: none;">Зареєструватися</a>
@@ -834,8 +1441,8 @@
             <div class="main-header">
                 <div class="header-content">
                     <a href="#" class="logo">
-                        <i class="fas fa-bolt"></i>
-                        ElectroStore
+                        <i class="fas fa-microchip"></i>
+                        ElectroTech
                     </a>
                     
                     <div class="search-bar">
@@ -851,6 +1458,11 @@
                         <a href="#" class="action-item">
                             <i class="far fa-heart"></i>
                             <span class="action-text">Обране</span>
+                        </a>
+                        <a href="#" class="action-item compare-container" id="compare-link">
+                            <i class="fas fa-balance-scale"></i>
+                            <span class="action-text">Порівняння</span>
+                            <span class="compare-count" id="compare-count">0</span>
                         </a>
                         <a href="#" class="action-item cart-container" id="cart-link">
                             <i class="fas fa-shopping-cart"></i>
@@ -875,6 +1487,7 @@
                 <li><a href="#" class="category-link" data-category="tablets">Планшети</a></li>
                 <li><a href="#" class="category-link" data-category="cameras">Фотоапарати</a></li>
                 <li><a href="#" class="category-link" data-category="gaming">Ігрові консолі</a></li>
+                <li><a href="#" class="category-link" data-category="accessories">Аксесуари</a></li>
             </ul>
         </div>
     </nav>
@@ -893,11 +1506,11 @@
                             <button class="reset-filters">Скинути</button>
                         </div>
                         <div class="price-range">
-                            <input type="range" id="price-range" min="0" max="50000" value="50000" step="1000">
+                            <input type="range" id="price-range" min="0" max="100000" value="100000" step="1000">
                         </div>
                         <div class="price-inputs">
-                            <input type="number" id="min-price" placeholder="Від" min="0" max="50000" value="0">
-                            <input type="number" id="max-price" placeholder="До" min="0" max="50000" value="50000">
+                            <input type="number" id="min-price" placeholder="Від" min="0" max="100000" value="0">
+                            <input type="number" id="max-price" placeholder="До" min="0" max="100000" value="100000">
                         </div>
                     </div>
                     
@@ -924,6 +1537,10 @@
                         <div class="filter-option">
                             <input type="checkbox" id="brand-logitech" class="brand-filter" value="Logitech">
                             <label for="brand-logitech">Logitech</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="brand-canon" class="brand-filter" value="Canon">
+                            <label for="brand-canon">Canon</label>
                         </div>
                     </div>
                     
@@ -957,6 +1574,10 @@
                             <input type="checkbox" id="with-discount" class="discount-filter">
                             <label for="with-discount">Зі знижкою</label>
                         </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="new-arrivals" class="new-filter">
+                            <label for="new-arrivals">Нові надходження</label>
+                        </div>
                     </div>
                 </div>
             </aside>
@@ -964,7 +1585,7 @@
             <!-- Products Section -->
             <section class="products-section">
                 <div class="products-header">
-                    <div id="products-count">Знайдено 10 товарів</div>
+                    <div id="products-count">Знайдено 15 товарів</div>
                     <div class="sort-by">
                         <select id="sort-select">
                             <option value="default">За замовчуванням</option>
@@ -972,6 +1593,7 @@
                             <option value="price-desc">Ціна: від високої до низької</option>
                             <option value="rating">За рейтингом</option>
                             <option value="name">За назвою</option>
+                            <option value="newest">Спочатку нові</option>
                         </select>
                     </div>
                 </div>
@@ -985,6 +1607,15 @@
                 </div>
             </section>
         </div>
+        
+        <!-- Viewed Products Section -->
+        <section class="viewed-products">
+            <h2>Недавно переглянуті товари</h2>
+            <div class="viewed-products-grid" id="viewed-products-grid">
+                <!-- Viewed products will be loaded here by JavaScript -->
+                <p style="grid-column: 1/-1; text-align: center; color: var(--gray);">Тут будуть відображатися товари, які ви переглядали</p>
+            </div>
+        </section>
     </main>
     
     <!-- Footer -->
@@ -992,8 +1623,8 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>ElectroStore</h3>
-                    <p>Демонстраційний інтернет-магазин електроніки з сучасним дизайном та широким функціоналом.</p>
+                    <h3>ElectroTech</h3>
+                    <p style="color: #cbd5e1; margin-bottom: 20px;">Демонстраційний інтернет-магазин електроніки з сучасним дизайном та широким функціоналом.</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
@@ -1027,19 +1658,20 @@
                 <div class="footer-section">
                     <h3>Контакти</h3>
                     <ul>
-                        <li><i class="fas fa-phone-alt"></i> +380 (XX) XXX-XX-XX</li>
-                        <li><i class="fas fa-envelope"></i> info@electrostoredemo.com</li>
-                        <li><i class="fas fa-map-marker-alt"></i> м. Київ, вул. Демонстраційна, 1</li>
+                        <li><i class="fas fa-phone-alt" style="margin-right: 8px;"></i> +380 (XX) XXX-XX-XX</li>
+                        <li><i class="fas fa-envelope" style="margin-right: 8px;"></i> info@electrotechdemo.com</li>
+                        <li><i class="fas fa-map-marker-alt" style="margin-right: 8px;"></i> м. Київ, вул. Демонстраційна, 1</li>
                     </ul>
                 </div>
             </div>
             
             <div class="demo-notice">
-                <p><strong>Увага:</strong> Цей сайт є демонстраційним проектом, створеним виключно в цілях презентації дизайнерських та фронтенд-можливостей студії CherryWebCmp. Усі функції (пошук, фільтрація, додавання до кошика, відгуки, авторизація) працюють лише на стороні клієнта та не пов'язані з реальним сервером або базою даних. Товари не можна реально придбати, а всі транзакції є імітацією. Сайт створено для демонстрації навичок веб-розробки.</p>
+                <h4>Увага: Демонстраційний проект</h4>
+                <p>Цей сайт є демонстраційним проектом, створеним виключно в цілях презентації дизайнерських та фронтенд-можливостей студії CherryWebCmp. Усі функції (пошук, фільтрація, додавання до кошика, відгуки, авторизація) працюють лише на стороні клієнта та не пов'язані з реальним сервером або базою даних. Товари не можна реально придбати, а всі транзакції є імітацією. Сайт створено для демонстрації навичок веб-розробки.</p>
             </div>
             
             <div class="copyright">
-                <p>&copy; 2023 ElectroStore. Демо-версія інтернет-магазину. Всі права захищені.</p>
+                <p>&copy; 2023 ElectroTech. Демо-версія інтернет-магазину. Всі права захищені.</p>
             </div>
         </div>
     </footer>
@@ -1050,6 +1682,16 @@
             <button class="modal-close" id="product-modal-close">&times;</button>
             <div class="modal-product-detail" id="product-detail-content">
                 <!-- Product detail content will be loaded here -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Quick View Modal -->
+    <div class="modal quick-view-modal" id="quick-view-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="quick-view-modal-close">&times;</button>
+            <div class="modal-product-detail" id="quick-view-content">
+                <!-- Quick view content will be loaded here -->
             </div>
         </div>
     </div>
@@ -1102,11 +1744,11 @@
     </div>
     
     <!-- Cart Modal -->
-    <div class="modal" id="cart-modal">
+    <div class="modal cart-modal" id="cart-modal">
         <div class="modal-content">
             <button class="modal-close" id="cart-modal-close">&times;</button>
-            <div style="padding: 30px;">
-                <h2 style="margin-bottom: 20px;">Кошик</h2>
+            <div class="cart-content">
+                <h2>Кошик</h2>
                 <div id="cart-items">
                     <!-- Cart items will be loaded here -->
                     <p id="empty-cart-message">Ваш кошик порожній</p>
@@ -1125,36 +1767,74 @@
         </div>
     </div>
     
+    <!-- Compare Modal -->
+    <div class="modal compare-modal" id="compare-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="compare-modal-close">&times;</button>
+            <div class="compare-content">
+                <h2>Порівняння товарів</h2>
+                <div id="compare-items">
+                    <p id="empty-compare-message">Додайте товари для порівняння (максимум 3)</p>
+                </div>
+                <div id="compare-table-container" style="display: none;">
+                    <table class="compare-table" id="compare-table">
+                        <!-- Compare table will be generated by JavaScript -->
+                    </table>
+                    <button class="btn btn-outline" id="clear-compare-btn" style="margin-top: 20px;">Очистити порівняння</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Notification Container -->
+    <div id="notification-container"></div>
+    
     <script>
-        // Product data
+        // Product data with 15 products
         const products = [
             {
                 id: 1,
-                name: "Apple iPhone 13 Pro",
+                name: "Apple iPhone 14 Pro Max",
                 category: "smartphones",
                 brand: "Apple",
-                price: 39999,
-                oldPrice: 42999,
-                rating: 4.8,
-                reviews: 124,
-                description: "Смартфон з потрійною камерою, дисплеєм Super Retina XDR та потужним чипом A15 Bionic. Підтримка 5G.",
-                image: "https://images.unsplash.com/photo-1632661674596-df8be070a5c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                price: 52999,
+                oldPrice: 55999,
+                rating: 4.9,
+                reviews: 234,
+                description: "Флагманський смартфон з динамічним острівцем, потрійною камерою 48 Мп та чипом A16 Bionic. Підтримка 5G та новітні технології.",
+                image: "https://images.unsplash.com/photo-1663499482523-1c0c1eae618d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
                 inStock: true,
-                discount: true
+                discount: true,
+                isNew: true,
+                specs: {
+                    "Дисплей": "6.7-дюймовий Super Retina XDR",
+                    "Процесор": "A16 Bionic",
+                    "Пам'ять": "256 ГБ",
+                    "Камера": "48 Мп + 12 Мп + 12 Мп",
+                    "Акумулятор": "4323 мА·год"
+                }
             },
             {
                 id: 2,
-                name: "Samsung Galaxy S22 Ultra",
+                name: "Samsung Galaxy S23 Ultra",
                 category: "smartphones",
                 brand: "Samsung",
-                price: 42999,
-                oldPrice: 45999,
-                rating: 4.7,
-                reviews: 89,
-                description: "Флагманський смартфон з S-Pen, потрійною камерою 108 Мп та динамічним дисплеєм AMOLED 2X.",
+                price: 47999,
+                oldPrice: 50999,
+                rating: 4.8,
+                reviews: 156,
+                description: "Потужний смартфон з S-Pen, камерою 200 Мп, дисплеєм Dynamic AMOLED 2X та процесором Snapdragon 8 Gen 2.",
                 image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
                 inStock: true,
-                discount: false
+                discount: false,
+                isNew: true,
+                specs: {
+                    "Дисплей": "6.8-дюймовий Dynamic AMOLED 2X",
+                    "Процесор": "Snapdragon 8 Gen 2",
+                    "Пам'ять": "256 ГБ",
+                    "Камера": "200 Мп + 10 Мп + 12 Мп + 10 Мп",
+                    "Акумулятор": "5000 мА·год"
+                }
             },
             {
                 id: 3,
@@ -1164,25 +1844,41 @@
                 price: 51999,
                 oldPrice: 54999,
                 rating: 4.9,
-                reviews: 67,
-                description: "Надзвичайно тонкий та легкий ноутбук з чипом Apple M2, дисплеєм Retina та автономністю до 18 годин.",
+                reviews: 89,
+                description: "Надзвичайно тонкий та легкий ноутбук з чипом Apple M2, дисплеєм Liquid Retina та автономністю до 18 годин.",
                 image: "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
                 inStock: true,
-                discount: true
+                discount: true,
+                isNew: false,
+                specs: {
+                    "Дисплей": "13.6-дюймовий Liquid Retina",
+                    "Процесор": "Apple M2",
+                    "Оперативна пам'ять": "8 ГБ",
+                    "Накопичувач": "256 ГБ SSD",
+                    "Акумулятор": "до 18 годин"
+                }
             },
             {
                 id: 4,
-                name: "Dell XPS 13",
+                name: "Dell XPS 13 Plus",
                 category: "laptops",
                 brand: "Dell",
-                price: 45999,
+                price: 56999,
                 oldPrice: null,
-                rating: 4.6,
-                reviews: 42,
-                description: "Преміум ноутбук з безрамковим дисплеєм InfinityEdge, процесором Intel Core i7 та високоякісними матеріалами.",
+                rating: 4.7,
+                reviews: 67,
+                description: "Преміум ноутбук з безрамковим дисплеєм InfinityEdge, сенсорною панеллю та потужним процесором Intel Core i7.",
                 image: "https://images.unsplash.com/photo-1593640408182-31c70c8268f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
                 inStock: true,
-                discount: false
+                discount: false,
+                isNew: true,
+                specs: {
+                    "Дисплей": "13.4-дюймовий InfinityEdge",
+                    "Процесор": "Intel Core i7-1260P",
+                    "Оперативна пам'ять": "16 ГБ",
+                    "Накопичувач": "512 ГБ SSD",
+                    "Акумулятор": "до 12 годин"
+                }
             },
             {
                 id: 5,
@@ -1192,11 +1888,19 @@
                 price: 14999,
                 oldPrice: 16999,
                 rating: 4.8,
-                reviews: 156,
+                reviews: 212,
                 description: "Преміум бездротові навушники з шумозаглушенням, високоякісним звуком та автономністю до 30 годин.",
                 image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
                 inStock: true,
-                discount: true
+                discount: true,
+                isNew: false,
+                specs: {
+                    "Тип": "Накладні, бездротові",
+                    "Шумозаглушення": "Активне",
+                    "Акумулятор": "до 30 годин",
+                    "Вага": "250 г",
+                    "Bluetooth": "5.2"
+                }
             },
             {
                 id: 6,
@@ -1206,39 +1910,63 @@
                 price: 18999,
                 oldPrice: 20999,
                 rating: 4.7,
-                reviews: 203,
+                reviews: 156,
                 description: "Розумний годинник з функціями моніторингу здоров'я, Always-On дисплеєм та підтримкою cellular.",
                 image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
                 inStock: true,
-                discount: false
+                discount: false,
+                isNew: true,
+                specs: {
+                    "Дисплей": "Always-On Retina",
+                    "Розмір": "45 мм",
+                    "Матеріал": "Алюміній",
+                    "Водостійкість": "50 м",
+                    "Акумулятор": "до 18 годин"
+                }
             },
             {
                 id: 7,
-                name: "Samsung Galaxy Tab S8",
+                name: "Samsung Galaxy Tab S8 Ultra",
                 category: "tablets",
                 brand: "Samsung",
-                price: 32999,
-                oldPrice: 34999,
-                rating: 4.5,
-                reviews: 56,
-                description: "Планшет з дисплеєм 11 дюймів, S-Pen в комплекті, потужним процесором Snapdragon та підтримкою Dex.",
+                price: 45999,
+                oldPrice: 49999,
+                rating: 4.6,
+                reviews: 89,
+                description: "Планшет з великим дисплеєм 14.6 дюймів, S-Pen в комплекті, потужним процесором Snapdragon та підтримкою Dex.",
                 image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
                 inStock: true,
-                discount: true
+                discount: true,
+                isNew: false,
+                specs: {
+                    "Дисплей": "14.6-дюймовий Super AMOLED",
+                    "Процесор": "Snapdragon 8 Gen 1",
+                    "Оперативна пам'ять": "12 ГБ",
+                    "Накопичувач": "256 ГБ",
+                    "Акумулятор": "11200 мА·год"
+                }
             },
             {
                 id: 8,
-                name: "Canon EOS R6",
+                name: "Canon EOS R6 Mark II",
                 category: "cameras",
                 brand: "Canon",
                 price: 89999,
                 oldPrice: 94999,
                 rating: 4.9,
-                reviews: 34,
+                reviews: 45,
                 description: "Повнокадрова бездзеркальна камера з стабілізацією 8 ступенів, швидкою серійною зйомкою та 4K відео.",
                 image: "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
                 inStock: true,
-                discount: false
+                discount: false,
+                isNew: true,
+                specs: {
+                    "Матриця": "Повний кадр 24.2 Мп",
+                    "Стабілізація": "8 ступенів",
+                    "Серійна зйомка": "40 кадр/с",
+                    "Відео": "4K 60p",
+                    "Екран": "Поворотний сенсорний"
+                }
             },
             {
                 id: 9,
@@ -1252,21 +1980,147 @@
                 description: "Ігрова консоль нового покоління з SSD накопичувачем, підтримкою 4K 120fps та технологією ray tracing.",
                 image: "https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
                 inStock: false,
-                discount: true
+                discount: true,
+                isNew: false,
+                specs: {
+                    "Процесор": "AMD Zen 2",
+                    "Графіка": "AMD RDNA 2",
+                    "Пам'ять": "16 ГБ GDDR6",
+                    "Накопичувач": "825 ГБ SSD",
+                    "Привід": "Ultra HD Blu-ray"
+                }
             },
             {
                 id: 10,
-                name: "Logitech MX Master 3",
+                name: "Logitech MX Master 3S",
                 category: "accessories",
                 brand: "Logitech",
-                price: 3499,
-                oldPrice: 3999,
-                rating: 4.6,
-                reviews: 178,
+                price: 4499,
+                oldPrice: 4999,
+                rating: 4.7,
+                reviews: 134,
                 description: "Ергономічна бездротова миша для продуктивності з унікальним колесом прокрутки MagSpeed та крос-комп'ютерним керуванням.",
                 image: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
                 inStock: true,
-                discount: true
+                discount: true,
+                isNew: false,
+                specs: {
+                    "Тип": "Бездротова",
+                    "Роздільна здатність": "8000 dpi",
+                    "Акумулятор": "до 70 днів",
+                    "Підключення": "Bluetooth, USB приймач",
+                    "Кнопки": "7 програмованих"
+                }
+            },
+            {
+                id: 11,
+                name: "Xiaomi Redmi Note 12 Pro+",
+                category: "smartphones",
+                brand: "Xiaomi",
+                price: 18999,
+                oldPrice: 20999,
+                rating: 4.5,
+                reviews: 89,
+                description: "Смартфон з камерою 200 Мп, процесором MediaTek Dimensity 1080 та швидкою зарядкою 120 Вт.",
+                image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                inStock: true,
+                discount: true,
+                isNew: true,
+                specs: {
+                    "Дисплей": "6.67-дюймовий AMOLED",
+                    "Процесор": "MediaTek Dimensity 1080",
+                    "Пам'ять": "256 ГБ",
+                    "Камера": "200 Мп + 8 Мп + 2 Мп",
+                    "Акумулятор": "5000 мА·год"
+                }
+            },
+            {
+                id: 12,
+                name: "Lenovo Yoga 9i",
+                category: "laptops",
+                brand: "Lenovo",
+                price: 64999,
+                oldPrice: 69999,
+                rating: 4.6,
+                reviews: 56,
+                description: "Трансформер з сенсорним дисплеєм, поворотом на 360 градусів, потужним процесором Intel Core i7 та звуковою системою від Bowers & Wilkins.",
+                image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                inStock: true,
+                discount: false,
+                isNew: true,
+                specs: {
+                    "Дисплей": "14-дюймовий сенсорний",
+                    "Процесор": "Intel Core i7-1360P",
+                    "Оперативна пам'ять": "16 ГБ",
+                    "Накопичувач": "1 ТБ SSD",
+                    "Акумулятор": "до 14 годин"
+                }
+            },
+            {
+                id: 13,
+                name: "JBL Flip 6",
+                category: "accessories",
+                brand: "JBL",
+                price: 3999,
+                oldPrice: 4499,
+                rating: 4.4,
+                reviews: 78,
+                description: "Портативна Bluetooth-колонка з водонепроникним дизайном, потужним звуком та автономністю до 12 годин.",
+                image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                inStock: true,
+                discount: true,
+                isNew: false,
+                specs: {
+                    "Тип": "Портативна колонка",
+                    "Потужність": "30 Вт",
+                    "Акумулятор": "до 12 годин",
+                    "Водостійкість": "IP67",
+                    "Bluetooth": "5.1"
+                }
+            },
+            {
+                id: 14,
+                name: "Nintendo Switch OLED",
+                category: "gaming",
+                brand: "Nintendo",
+                price: 16999,
+                oldPrice: 18999,
+                rating: 4.7,
+                reviews: 201,
+                description: "Гібридна ігрова консоль з OLED дисплеєм 7 дюймів, покращеними динаміками та збільшеною внутрішньою пам'яттю.",
+                image: "https://images.unsplash.com/photo-1580327344181-c1163234e5a0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                inStock: true,
+                discount: true,
+                isNew: false,
+                specs: {
+                    "Дисплей": "7-дюймовий OLED",
+                    "Пам'ять": "64 ГБ",
+                    "Режими": "Док-станція, портативний",
+                    "Акумулятор": "до 9 годин",
+                    "Підключення": "Wi-Fi, Bluetooth 4.1"
+                }
+            },
+            {
+                id: 15,
+                name: "GoPro HERO11 Black",
+                category: "cameras",
+                brand: "GoPro",
+                price: 18999,
+                oldPrice: 20999,
+                rating: 4.6,
+                reviews: 123,
+                description: "Екшн-камера з сенсором 27 Мп, відео 5.3K 60fps, вбудованою стабілізацією HyperSmooth 5.0 та водонепроникним дизайном.",
+                image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                inStock: true,
+                discount: false,
+                isNew: true,
+                specs: {
+                    "Матриця": "27 Мп",
+                    "Відео": "5.3K 60fps, 4K 120fps",
+                    "Стабілізація": "HyperSmooth 5.0",
+                    "Водостійкість": "10 м",
+                    "Екран": "Передній та задній сенсорні"
+                }
             }
         ];
 
@@ -1274,11 +2128,14 @@
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
         let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+        let compareList = JSON.parse(localStorage.getItem('compareList')) || [];
+        let viewedProducts = JSON.parse(localStorage.getItem('viewedProducts')) || [];
         let reviews = JSON.parse(localStorage.getItem('reviews')) || {};
 
         // DOM elements
         const productsGrid = document.getElementById('products-grid');
         const cartCount = document.getElementById('cart-count');
+        const compareCount = document.getElementById('compare-count');
         const cartItemsContainer = document.getElementById('cart-items');
         const cartSummary = document.getElementById('cart-summary');
         const cartTotal = document.getElementById('cart-total');
@@ -1291,16 +2148,22 @@
         const ratingFilters = document.querySelectorAll('.rating-filter');
         const stockFilter = document.getElementById('in-stock');
         const discountFilter = document.getElementById('with-discount');
+        const newFilter = document.getElementById('new-arrivals');
         const priceRange = document.getElementById('price-range');
         const minPriceInput = document.getElementById('min-price');
         const maxPriceInput = document.getElementById('max-price');
         const resetFiltersBtn = document.querySelector('.reset-filters');
         const productsCount = document.getElementById('products-count');
+        const viewedProductsGrid = document.getElementById('viewed-products-grid');
         
         // Modals
         const productModal = document.getElementById('product-modal');
         const productModalClose = document.getElementById('product-modal-close');
         const productDetailContent = document.getElementById('product-detail-content');
+        
+        const quickViewModal = document.getElementById('quick-view-modal');
+        const quickViewModalClose = document.getElementById('quick-view-modal-close');
+        const quickViewContent = document.getElementById('quick-view-content');
         
         const authModal = document.getElementById('auth-modal');
         const authModalClose = document.getElementById('auth-modal-close');
@@ -1318,85 +2181,170 @@
         const cartModalClose = document.getElementById('cart-modal-close');
         const cartLink = document.getElementById('cart-link');
         const checkoutBtn = document.getElementById('checkout-btn');
+        
+        const compareModal = document.getElementById('compare-modal');
+        const compareModalClose = document.getElementById('compare-modal-close');
+        const compareLink = document.getElementById('compare-link');
+        const compareItemsContainer = document.getElementById('compare-items');
+        const compareTableContainer = document.getElementById('compare-table-container');
+        const compareTable = document.getElementById('compare-table');
+        const emptyCompareMessage = document.getElementById('empty-compare-message');
+        const clearCompareBtn = document.getElementById('clear-compare-btn');
+        
+        const notificationContainer = document.getElementById('notification-container');
 
         // Initialize
         updateCartCount();
+        updateCompareCount();
         displayProducts(products);
+        displayViewedProducts();
         setupEventListeners();
+        addProductAnimations();
 
         // Functions
         function displayProducts(productsToDisplay) {
             productsGrid.innerHTML = '';
             
             if (productsToDisplay.length === 0) {
-                productsGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--gray);"><h3>Товари не знайдені</h3><p>Спробуйте змінити параметри пошуку або фільтрації</p></div>';
+                productsGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 60px; color: var(--gray);"><h3 style="margin-bottom: 15px;">Товари не знайдені</h3><p>Спробуйте змінити параметри пошуку або фільтрації</p></div>';
                 productsCount.textContent = 'Знайдено 0 товарів';
                 return;
             }
             
-            productsCount.textContent = `Знайдено ${productsToDisplay.length} товар${productsToDisplay.length % 10 === 1 ? '' : 'ів'}`;
+            productsCount.textContent = `Знайдено ${productsToDisplay.length} товар${getPluralForm(productsToDisplay.length)}`;
             
-            productsToDisplay.forEach(product => {
-                const isInWishlist = wishlist.includes(product.id);
-                const productElement = document.createElement('div');
-                productElement.className = 'product-card';
-                productElement.innerHTML = `
-                    <div class="product-image">
-                        <img src="${product.image}" alt="${product.name}">
-                        ${product.discount ? '<div class="product-badge">Знижка</div>' : ''}
-                        ${!product.inStock ? '<div class="product-badge" style="background-color: var(--danger);">Немає в наявності</div>' : ''}
-                        <div class="product-wishlist ${isInWishlist ? 'active' : ''}" data-id="${product.id}">
-                            <i class="${isInWishlist ? 'fas' : 'far'} fa-heart"></i>
-                        </div>
-                    </div>
-                    <div class="product-info">
-                        <div class="product-category">${product.category}</div>
-                        <h3 class="product-name">${product.name}</h3>
-                        <div class="product-rating">
-                            <div class="stars">
-                                ${getStarRating(product.rating)}
+            // Add animation delay to each card
+            productsToDisplay.forEach((product, index) => {
+                setTimeout(() => {
+                    const isInWishlist = wishlist.includes(product.id);
+                    const isInCompare = compareList.includes(product.id);
+                    const productElement = document.createElement('div');
+                    productElement.className = 'product-card';
+                    productElement.style.animationDelay = `${index * 0.05}s`;
+                    productElement.innerHTML = `
+                        <div class="product-image">
+                            <img src="${product.image}" alt="${product.name}">
+                            ${product.discount ? '<div class="product-badge">Знижка</div>' : ''}
+                            ${product.isNew ? '<div class="product-badge product-new">Новинка</div>' : ''}
+                            ${!product.inStock ? '<div class="product-badge" style="background: linear-gradient(90deg, var(--danger) 0%, #dc2626 100%);">Немає в наявності</div>' : ''}
+                            <div class="product-wishlist ${isInWishlist ? 'active' : ''}" data-id="${product.id}">
+                                <i class="${isInWishlist ? 'fas' : 'far'} fa-heart"></i>
                             </div>
-                            <div class="rating-count">${product.rating} (${product.reviews})</div>
+                            <div class="product-compare ${isInCompare ? 'active' : ''}" data-id="${product.id}">
+                                <i class="fas fa-balance-scale"></i>
+                            </div>
                         </div>
-                        <div class="product-price">
-                            ${product.oldPrice ? `<span class="product-old-price">${product.oldPrice} грн</span>` : ''}
-                            ${product.price} грн
+                        <div class="product-info">
+                            <div class="product-category">${product.category}</div>
+                            <h3 class="product-name">${product.name}</h3>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    ${getStarRating(product.rating)}
+                                </div>
+                                <div class="rating-count">${product.rating} (${product.reviews})</div>
+                            </div>
+                            <div class="product-price">
+                                ${product.oldPrice ? `<span class="product-old-price">${product.oldPrice} грн</span>` : ''}
+                                ${product.price} грн
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn btn-primary add-to-cart" data-id="${product.id}" ${!product.inStock ? 'disabled' : ''}>
+                                    <i class="fas fa-shopping-cart"></i> ${!product.inStock ? 'Немає в наявності' : 'В кошик'}
+                                </button>
+                                <button class="btn btn-outline view-details" data-id="${product.id}">
+                                    <i class="fas fa-eye"></i> Деталі
+                                </button>
+                                <button class="btn btn-outline quick-view" data-id="${product.id}" style="display: none;">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
                         </div>
-                        <div class="product-actions">
-                            <button class="btn btn-primary add-to-cart" data-id="${product.id}" ${!product.inStock ? 'disabled' : ''}>
-                                <i class="fas fa-shopping-cart"></i> ${!product.inStock ? 'Немає в наявності' : 'В кошик'}
-                            </button>
-                            <button class="btn btn-outline view-details" data-id="${product.id}">
-                                <i class="fas fa-eye"></i> Деталі
-                            </button>
-                        </div>
-                    </div>
-                `;
-                
-                productsGrid.appendChild(productElement);
+                    `;
+                    
+                    productsGrid.appendChild(productElement);
+                }, 10);
             });
             
             // Add event listeners to newly created elements
-            document.querySelectorAll('.add-to-cart').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const productId = parseInt(e.target.closest('.add-to-cart').dataset.id);
-                    addToCart(productId);
+            setTimeout(() => {
+                document.querySelectorAll('.add-to-cart').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const productId = parseInt(e.target.closest('.add-to-cart').dataset.id);
+                        addToCart(productId);
+                    });
                 });
-            });
+                
+                document.querySelectorAll('.view-details').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const productId = parseInt(e.target.closest('.view-details').dataset.id);
+                        showProductDetail(productId);
+                    });
+                });
+                
+                document.querySelectorAll('.quick-view').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const productId = parseInt(e.target.closest('.quick-view').dataset.id);
+                        showQuickView(productId);
+                    });
+                });
+                
+                document.querySelectorAll('.product-wishlist').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const productId = parseInt(e.target.closest('.product-wishlist').dataset.id);
+                        toggleWishlist(productId);
+                    });
+                });
+                
+                document.querySelectorAll('.product-compare').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const productId = parseInt(e.target.closest('.product-compare').dataset.id);
+                        toggleCompare(productId);
+                    });
+                });
+            }, 100);
+        }
+
+        function addProductAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
             
-            document.querySelectorAll('.view-details').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const productId = parseInt(e.target.closest('.view-details').dataset.id);
-                    showProductDetail(productId);
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
                 });
-            });
+            }, observerOptions);
             
-            document.querySelectorAll('.product-wishlist').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const productId = parseInt(e.target.closest('.product-wishlist').dataset.id);
-                    toggleWishlist(productId);
-                });
+            // Observe product cards
+            document.querySelectorAll('.product-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(card);
             });
+        }
+
+        function getPluralForm(number) {
+            const lastDigit = number % 10;
+            const lastTwoDigits = number % 100;
+            
+            if (lastTwoDigits >= 11 && lastTwoDigits <= 19) {
+                return 'ів';
+            }
+            
+            if (lastDigit === 1) {
+                return '';
+            }
+            
+            if (lastDigit >= 2 && lastDigit <= 4) {
+                return 'и';
+            }
+            
+            return 'ів';
         }
 
         function getStarRating(rating) {
@@ -1441,7 +2389,7 @@
             saveCartToStorage();
             
             // Show notification
-            showNotification(`${product.name} додано до кошика`);
+            showNotification(`${product.name} додано до кошика`, 'success');
         }
 
         function updateCartCount() {
@@ -1449,49 +2397,49 @@
             cartCount.textContent = totalItems;
         }
 
+        function updateCompareCount() {
+            compareCount.textContent = compareList.length;
+        }
+
         function saveCartToStorage() {
             localStorage.setItem('cart', JSON.stringify(cart));
         }
 
-        function showNotification(message) {
-            // Create notification element
+        function showNotification(message, type = 'info') {
             const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background-color: var(--primary);
-                color: white;
-                padding: 15px 20px;
-                border-radius: var(--border-radius);
-                box-shadow: var(--shadow);
-                z-index: 10000;
-                transform: translateX(150%);
-                transition: transform 0.3s ease;
-                max-width: 300px;
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <div class="notification-icon">
+                    <i class="fas fa-${type === 'success' ? 'check' : type === 'error' ? 'exclamation' : 'info'}"></i>
+                </div>
+                <div>${message}</div>
             `;
-            notification.textContent = message;
             
-            document.body.appendChild(notification);
+            notificationContainer.appendChild(notification);
             
-            // Animate in
+            // Show notification
             setTimeout(() => {
-                notification.style.transform = 'translateX(0)';
+                notification.classList.add('show');
             }, 10);
             
-            // Remove after 3 seconds
+            // Remove after 4 seconds
             setTimeout(() => {
-                notification.style.transform = 'translateX(150%)';
+                notification.classList.remove('show');
                 setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 300);
-            }, 3000);
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 400);
+            }, 4000);
         }
 
         function showProductDetail(productId) {
             const product = products.find(p => p.id === productId);
             
             if (!product) return;
+            
+            // Add to viewed products
+            addToViewedProducts(productId);
             
             const productReviews = reviews[productId] || [];
             
@@ -1512,6 +2460,17 @@
                         ${product.price} грн
                     </div>
                     <p class="product-description">${product.description}</p>
+                    
+                    <div class="product-specs">
+                        <h3>Характеристики</h3>
+                        ${Object.entries(product.specs || {}).map(([key, value]) => `
+                            <div class="spec-item">
+                                <div class="spec-label">${key}</div>
+                                <div class="spec-value">${value}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
                     <div style="margin-bottom: 20px;">
                         <strong>Бренд:</strong> ${product.brand}<br>
                         <strong>Категорія:</strong> ${product.category}<br>
@@ -1523,6 +2482,9 @@
                         </button>
                         <button class="btn btn-outline toggle-wishlist-modal" data-id="${product.id}" style="flex: 1;">
                             <i class="${wishlist.includes(product.id) ? 'fas' : 'far'} fa-heart"></i>
+                        </button>
+                        <button class="btn btn-outline toggle-compare-modal" data-id="${product.id}" style="flex: 1;">
+                            <i class="fas fa-balance-scale"></i>
                         </button>
                     </div>
                     
@@ -1578,6 +2540,14 @@
                 heartIcon.className = isInWishlist ? 'fas fa-heart' : 'far fa-heart';
             });
             
+            document.querySelector('.toggle-compare-modal').addEventListener('click', () => {
+                toggleCompare(productId);
+                // Update compare icon
+                const compareIcon = document.querySelector('.toggle-compare-modal i');
+                const isInCompare = compareList.includes(productId);
+                compareIcon.style.color = isInCompare ? 'var(--primary)' : '';
+            });
+            
             // Review stars rating
             const starIcons = document.querySelectorAll('#review-stars i');
             const reviewRatingInput = document.getElementById('review-rating');
@@ -1603,15 +2573,128 @@
             });
         }
 
+        function showQuickView(productId) {
+            const product = products.find(p => p.id === productId);
+            
+            if (!product) return;
+            
+            quickViewContent.innerHTML = `
+                <div class="modal-product-image">
+                    <img src="${product.image}" alt="${product.name}">
+                </div>
+                <div class="modal-product-info">
+                    <h2>${product.name}</h2>
+                    <div class="product-rating" style="margin-bottom: 10px;">
+                        <div class="stars">
+                            ${getStarRating(product.rating)}
+                        </div>
+                        <div class="rating-count">${product.rating} (${product.reviews} відгуків)</div>
+                    </div>
+                    <div class="modal-product-price">
+                        ${product.oldPrice ? `<span style="font-size: 1.5rem; color: var(--gray); text-decoration: line-through; margin-right: 10px;">${product.oldPrice} грн</span>` : ''}
+                        ${product.price} грн
+                    </div>
+                    <p class="product-description">${product.description}</p>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <strong>Бренд:</strong> ${product.brand}<br>
+                        <strong>Категорія:</strong> ${product.category}<br>
+                        <strong>Наявність:</strong> ${product.inStock ? 'Є в наявності' : 'Немає в наявності'}
+                    </div>
+                    <div class="product-actions">
+                        <button class="btn btn-primary add-to-cart-quickview" data-id="${product.id}" ${!product.inStock ? 'disabled' : ''} style="flex: 2;">
+                            <i class="fas fa-shopping-cart"></i> ${!product.inStock ? 'Немає в наявності' : 'Додати до кошика'}
+                        </button>
+                        <button class="btn btn-outline view-details-quickview" data-id="${product.id}" style="flex: 1;">
+                            <i class="fas fa-eye"></i> Деталі
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            quickViewModal.classList.add('active');
+            
+            // Add event listeners for quick view buttons
+            document.querySelector('.add-to-cart-quickview').addEventListener('click', () => {
+                addToCart(productId);
+                quickViewModal.classList.remove('active');
+            });
+            
+            document.querySelector('.view-details-quickview').addEventListener('click', () => {
+                quickViewModal.classList.remove('active');
+                setTimeout(() => {
+                    showProductDetail(productId);
+                }, 300);
+            });
+        }
+
+        function addToViewedProducts(productId) {
+            // Remove if already exists
+            const index = viewedProducts.indexOf(productId);
+            if (index > -1) {
+                viewedProducts.splice(index, 1);
+            }
+            
+            // Add to beginning
+            viewedProducts.unshift(productId);
+            
+            // Keep only last 5 viewed products
+            if (viewedProducts.length > 5) {
+                viewedProducts = viewedProducts.slice(0, 5);
+            }
+            
+            localStorage.setItem('viewedProducts', JSON.stringify(viewedProducts));
+            displayViewedProducts();
+        }
+
+        function displayViewedProducts() {
+            if (viewedProducts.length === 0) {
+                viewedProductsGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--gray);">Тут будуть відображатися товари, які ви переглядали</p>';
+                return;
+            }
+            
+            viewedProductsGrid.innerHTML = '';
+            
+            viewedProducts.forEach(productId => {
+                const product = products.find(p => p.id === productId);
+                if (!product) return;
+                
+                const productElement = document.createElement('div');
+                productElement.className = 'viewed-product-card';
+                productElement.innerHTML = `
+                    <div class="viewed-product-image">
+                        <img src="${product.image}" alt="${product.name}">
+                    </div>
+                    <div class="viewed-product-info">
+                        <h4 class="viewed-product-name">${product.name}</h4>
+                        <div class="viewed-product-price">${product.price} грн</div>
+                        <button class="btn btn-outline view-again" data-id="${product.id}" style="width: 100%; margin-top: 10px; padding: 8px;">
+                            <i class="fas fa-eye"></i> Переглянути
+                        </button>
+                    </div>
+                `;
+                
+                viewedProductsGrid.appendChild(productElement);
+            });
+            
+            // Add event listeners
+            document.querySelectorAll('.view-again').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const productId = parseInt(e.target.closest('.view-again').dataset.id);
+                    showProductDetail(productId);
+                });
+            });
+        }
+
         function toggleWishlist(productId) {
             const index = wishlist.indexOf(productId);
             
             if (index > -1) {
                 wishlist.splice(index, 1);
-                showNotification('Товар видалено з обраного');
+                showNotification('Товар видалено з обраного', 'info');
             } else {
                 wishlist.push(productId);
-                showNotification('Товар додано в обране');
+                showNotification('Товар додано в обране', 'success');
             }
             
             localStorage.setItem('wishlist', JSON.stringify(wishlist));
@@ -1630,12 +2713,41 @@
             }
         }
 
+        function toggleCompare(productId) {
+            const index = compareList.indexOf(productId);
+            
+            if (index > -1) {
+                compareList.splice(index, 1);
+                showNotification('Товар видалено з порівняння', 'info');
+            } else {
+                if (compareList.length >= 3) {
+                    showNotification('Можна порівнювати не більше 3 товарів', 'error');
+                    return;
+                }
+                compareList.push(productId);
+                showNotification('Товар додано до порівняння', 'success');
+            }
+            
+            localStorage.setItem('compareList', JSON.stringify(compareList));
+            updateCompareCount();
+            
+            // Update compare icon on product card if it exists
+            const compareIcon = document.querySelector(`.product-compare[data-id="${productId}"]`);
+            if (compareIcon) {
+                if (index > -1) {
+                    compareIcon.classList.remove('active');
+                } else {
+                    compareIcon.classList.add('active');
+                }
+            }
+        }
+
         function submitReview(productId) {
             const rating = parseInt(document.getElementById('review-rating').value);
             const text = document.getElementById('review-text').value.trim();
             
             if (!text) {
-                showNotification('Будь ласка, введіть текст відгуку');
+                showNotification('Будь ласка, введіть текст відгуку', 'error');
                 return;
             }
             
@@ -1654,7 +2766,7 @@
             reviews[productId].push(newReview);
             localStorage.setItem('reviews', JSON.stringify(reviews));
             
-            showNotification('Ваш відгук додано');
+            showNotification('Ваш відгук додано', 'success');
             
             // Update reviews display
             showProductDetail(productId);
@@ -1667,8 +2779,9 @@
             const selectedRating = document.querySelector('.rating-filter:checked')?.value;
             const inStockOnly = stockFilter.checked;
             const withDiscountOnly = discountFilter.checked;
+            const newOnly = newFilter.checked;
             const minPrice = parseInt(minPriceInput.value) || 0;
-            const maxPrice = parseInt(maxPriceInput.value) || 50000;
+            const maxPrice = parseInt(maxPriceInput.value) || 100000;
             
             let filteredProducts = products.filter(product => {
                 // Search filter
@@ -1691,10 +2804,13 @@
                 // Discount filter
                 const matchesDiscount = !withDiscountOnly || product.discount;
                 
+                // New filter
+                const matchesNew = !newOnly || product.isNew;
+                
                 // Price filter
                 const matchesPrice = product.price >= minPrice && product.price <= maxPrice;
                 
-                return matchesSearch && matchesCategory && matchesBrand && matchesRating && matchesStock && matchesDiscount && matchesPrice;
+                return matchesSearch && matchesCategory && matchesBrand && matchesRating && matchesStock && matchesDiscount && matchesNew && matchesPrice;
             });
             
             // Apply sorting
@@ -1712,12 +2828,115 @@
                 case 'name':
                     filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
                     break;
+                case 'newest':
+                    filteredProducts.sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0));
+                    break;
                 default:
                     // Default sorting (by id)
                     break;
             }
             
             displayProducts(filteredProducts);
+            addProductAnimations();
+        }
+
+        function showCompareModal() {
+            compareModal.classList.add('active');
+            
+            if (compareList.length === 0) {
+                emptyCompareMessage.style.display = 'block';
+                compareTableContainer.style.display = 'none';
+                return;
+            }
+            
+            emptyCompareMessage.style.display = 'none';
+            compareTableContainer.style.display = 'block';
+            
+            // Get products to compare
+            const productsToCompare = products.filter(p => compareList.includes(p.id));
+            
+            // Generate comparison table
+            let tableHTML = `
+                <thead>
+                    <tr>
+                        <th>Характеристика</th>
+                        ${productsToCompare.map(product => `<th>${product.name}</th>`).join('')}
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Ціна</td>
+                        ${productsToCompare.map(product => `<td>${product.price} грн</td>`).join('')}
+                    </tr>
+                    <tr>
+                        <td>Рейтинг</td>
+                        ${productsToCompare.map(product => `<td>${product.rating} ⭐ (${product.reviews})</td>`).join('')}
+                    </tr>
+                    <tr>
+                        <td>Бренд</td>
+                        ${productsToCompare.map(product => `<td>${product.brand}</td>`).join('')}
+                    </tr>
+                    <tr>
+                        <td>Категорія</td>
+                        ${productsToCompare.map(product => `<td>${product.category}</td>`).join('')}
+                    </tr>
+                    <tr>
+                        <td>Наявність</td>
+                        ${productsToCompare.map(product => `<td>${product.inStock ? 'Є в наявності' : 'Немає'}</td>`).join('')}
+                    </tr>
+            `;
+            
+            // Add specifications if available
+            const allSpecs = new Set();
+            productsToCompare.forEach(product => {
+                if (product.specs) {
+                    Object.keys(product.specs).forEach(spec => allSpecs.add(spec));
+                }
+            });
+            
+            allSpecs.forEach(spec => {
+                tableHTML += `
+                    <tr>
+                        <td>${spec}</td>
+                        ${productsToCompare.map(product => `<td>${product.specs ? product.specs[spec] || '-' : '-'}</td>`).join('')}
+                    </tr>
+                `;
+            });
+            
+            tableHTML += `
+                    <tr>
+                        <td>Дії</td>
+                        ${productsToCompare.map(product => `
+                            <td>
+                                <button class="btn btn-outline add-to-cart-compare" data-id="${product.id}" style="padding: 8px 12px; font-size: 0.9rem; margin-bottom: 5px;" ${!product.inStock ? 'disabled' : ''}>
+                                    <i class="fas fa-cart-plus"></i>
+                                </button>
+                                <button class="btn btn-outline remove-compare" data-id="${product.id}" style="padding: 8px 12px; font-size: 0.9rem;">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        `).join('')}
+                    </tr>
+                </tbody>
+            `;
+            
+            compareTable.innerHTML = tableHTML;
+            
+            // Add event listeners to compare table buttons
+            document.querySelectorAll('.add-to-cart-compare').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const productId = parseInt(e.target.closest('.add-to-cart-compare').dataset.id);
+                    addToCart(productId);
+                });
+            });
+            
+            document.querySelectorAll('.remove-compare').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const productId = parseInt(e.target.closest('.remove-compare').dataset.id);
+                    toggleCompare(productId);
+                    showCompareModal(); // Refresh the modal
+                });
+            });
         }
 
         function setupEventListeners() {
@@ -1750,6 +2969,7 @@
             
             stockFilter.addEventListener('change', filterProducts);
             discountFilter.addEventListener('change', filterProducts);
+            newFilter.addEventListener('change', filterProducts);
             
             // Price filter
             priceRange.addEventListener('input', () => {
@@ -1782,9 +3002,10 @@
                 ratingFilters.forEach(rb => rb.checked = false);
                 stockFilter.checked = true;
                 discountFilter.checked = false;
+                newFilter.checked = false;
                 minPriceInput.value = 0;
-                maxPriceInput.value = 50000;
-                priceRange.value = 50000;
+                maxPriceInput.value = 100000;
+                priceRange.value = 100000;
                 sortSelect.value = 'default';
                 
                 filterProducts();
@@ -1798,6 +3019,10 @@
                 productModal.classList.remove('active');
             });
             
+            quickViewModalClose.addEventListener('click', () => {
+                quickViewModal.classList.remove('active');
+            });
+            
             authModalClose.addEventListener('click', () => {
                 authModal.classList.remove('active');
             });
@@ -1806,16 +3031,26 @@
                 cartModal.classList.remove('active');
             });
             
+            compareModalClose.addEventListener('click', () => {
+                compareModal.classList.remove('active');
+            });
+            
             // Close modal when clicking outside
             window.addEventListener('click', (e) => {
                 if (e.target === productModal) {
                     productModal.classList.remove('active');
+                }
+                if (e.target === quickViewModal) {
+                    quickViewModal.classList.remove('active');
                 }
                 if (e.target === authModal) {
                     authModal.classList.remove('active');
                 }
                 if (e.target === cartModal) {
                     cartModal.classList.remove('active');
+                }
+                if (e.target === compareModal) {
+                    compareModal.classList.remove('active');
                 }
             });
             
@@ -1835,7 +3070,7 @@
             profileLink.addEventListener('click', (e) => {
                 e.preventDefault();
                 if (currentUser) {
-                    showNotification(`Ви увійшли як ${currentUser.name}`);
+                    showNotification(`Ви увійшли як ${currentUser.name}`, 'success');
                 } else {
                     authModal.classList.add('active');
                     showLoginForm();
@@ -1851,7 +3086,7 @@
                 const password = document.getElementById('login-password').value;
                 
                 if (!email || !password) {
-                    showNotification('Будь ласка, заповніть всі поля');
+                    showNotification('Будь ласка, заповніть всі поля', 'error');
                     return;
                 }
                 
@@ -1863,7 +3098,7 @@
                 
                 localStorage.setItem('currentUser', JSON.stringify(currentUser));
                 
-                showNotification(`Вітаємо, ${currentUser.name}! Ви успішно увійшли.`);
+                showNotification(`Вітаємо, ${currentUser.name}! Ви успішно увійшли.`, 'success');
                 authModal.classList.remove('active');
                 
                 // Clear form
@@ -1878,12 +3113,12 @@
                 const passwordConfirm = document.getElementById('register-password-confirm').value;
                 
                 if (!name || !email || !password || !passwordConfirm) {
-                    showNotification('Будь ласка, заповніть всі поля');
+                    showNotification('Будь ласка, заповніть всі поля', 'error');
                     return;
                 }
                 
                 if (password !== passwordConfirm) {
-                    showNotification('Паролі не співпадають');
+                    showNotification('Паролі не співпадають', 'error');
                     return;
                 }
                 
@@ -1895,7 +3130,7 @@
                 
                 localStorage.setItem('currentUser', JSON.stringify(currentUser));
                 
-                showNotification(`Вітаємо, ${currentUser.name}! Реєстрація успішна.`);
+                showNotification(`Вітаємо, ${currentUser.name}! Реєстрація успішна.`, 'success');
                 authModal.classList.remove('active');
                 showLoginForm();
                 
@@ -1912,11 +3147,31 @@
                 showCartModal();
             });
             
+            // Compare modal
+            compareLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                showCompareModal();
+            });
+            
+            // Clear compare button
+            clearCompareBtn.addEventListener('click', () => {
+                compareList = [];
+                localStorage.setItem('compareList', JSON.stringify(compareList));
+                updateCompareCount();
+                showCompareModal();
+                showNotification('Порівняння очищено', 'info');
+                
+                // Update compare icons on product cards
+                document.querySelectorAll('.product-compare').forEach(icon => {
+                    icon.classList.remove('active');
+                });
+            });
+            
             // Checkout
             checkoutBtn.addEventListener('click', () => {
                 if (cart.length === 0) return;
                 
-                showNotification('Демо-режим: замовлення прийнято! У реальному магазині зараз би почалася обробка платежу.');
+                showNotification('Демо-режим: замовлення прийнято! У реальному магазині зараз би почалася обробка платежу.', 'success');
                 
                 // Clear cart
                 cart = [];
@@ -1968,26 +3223,27 @@
                 itemElement.style.cssText = `
                     display: flex;
                     align-items: center;
-                    padding: 15px 0;
+                    padding: 20px 0;
                     border-bottom: 1px solid var(--gray-light);
+                    animation: fadeInUp 0.5s ease-out;
                 `;
                 
                 itemElement.innerHTML = `
-                    <div style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; background-color: white; border-radius: var(--border-radius); margin-right: 15px;">
-                        <img src="${item.image}" alt="${item.name}" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    <div style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; background-color: white; border-radius: var(--border-radius-sm); margin-right: 20px; border: 1px solid var(--gray-light); overflow: hidden;">
+                        <img src="${item.image}" alt="${item.name}" style="max-width: 100%; max-height: 100%; object-fit: contain; padding: 10px;">
                     </div>
                     <div style="flex: 1;">
-                        <h4 style="margin-bottom: 5px;">${item.name}</h4>
-                        <div style="color: var(--gray); font-size: 0.9rem; margin-bottom: 10px;">${item.brand}</div>
+                        <h4 style="margin-bottom: 8px; font-weight: 600;">${item.name}</h4>
+                        <div style="color: var(--gray); font-size: 0.9rem; margin-bottom: 12px;">${item.brand}</div>
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <div>
                                 <span style="font-weight: 600; font-size: 1.1rem;">${item.price} грн</span>
-                                <span style="margin-left: 10px;">x ${item.quantity}</span>
+                                <span style="margin-left: 15px;">x ${item.quantity}</span>
                             </div>
                             <div style="font-weight: 600; font-size: 1.1rem;">${item.price * item.quantity} грн</div>
                         </div>
                     </div>
-                    <button class="remove-from-cart" data-id="${item.id}" style="background: none; border: none; color: var(--danger); cursor: pointer; font-size: 1.2rem; margin-left: 10px;">
+                    <button class="remove-from-cart" data-id="${item.id}" style="background: none; border: none; color: var(--danger); cursor: pointer; font-size: 1.2rem; margin-left: 15px; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: var(--transition);">
                         <i class="fas fa-trash"></i>
                     </button>
                 `;
@@ -2013,7 +3269,7 @@
             saveCartToStorage();
             updateCartCount();
             showCartModal();
-            showNotification('Товар видалено з кошика');
+            showNotification('Товар видалено з кошика', 'info');
         }
     </script>
 </body>
