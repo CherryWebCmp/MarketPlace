@@ -1,0 +1,172 @@
+нелвикс, [23.12.2025 17:34]
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechStore Demo | CherryWebCmp</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Уведомление о добавлении в корзину -->
+    <div id="cart-notification" class="cart-notification">
+        <span>Товар додано до кошика!</span>
+    </div>
+
+    <!-- Модальное окно для входа/регистрации -->
+    <div id="auth-modal" class="auth-modal">
+        <div class="auth-modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login">Увійти</button>
+                <button class="auth-tab" data-tab="register">Зареєструватися</button>
+            </div>
+            
+            <div id="login-form" class="auth-form active">
+                <h3>Вхід в аккаунт</h3>
+                <div class="form-group">
+                    <label for="login-email">Електронна пошта</label>
+                    <input type="email" id="login-email" placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Пароль</label>
+                    <input type="password" id="login-password" placeholder="Ваш пароль">
+                </div>
+                <button id="login-btn" class="auth-submit-btn">Увійти</button>
+                <p class="auth-demo-note">Ця форма демонстраційна. Дані не відправляються на сервер.</p>
+            </div>
+            
+            <div id="register-form" class="auth-form">
+                <h3>Реєстрація</h3>
+                <div class="form-group">
+                    <label for="register-name">Ім'я</label>
+                    <input type="text" id="register-name" placeholder="Ваше ім'я">
+                </div>
+                <div class="form-group">
+                    <label for="register-email">Електронна пошта</label>
+                    <input type="email" id="register-email" placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Пароль</label>
+                    <input type="password" id="register-password" placeholder="Створіть пароль">
+                </div>
+                <button id="register-btn" class="auth-submit-btn">Зареєструватися</button>
+                <p class="auth-demo-note">Ця форма демонстраційна. Дані не відправляються на сервер.</p>
+            </div>
+            
+            <div id="auth-success" class="auth-success">
+                <i class="fas fa-check-circle"></i>
+                <h3>Успішна авторизація!</h3>
+                <p>Ви увійшли в демонстраційний режим. Дані зберігаються лише у вашому браузері.</p>
+                <button id="logout-btn" class="auth-submit-btn">Вийти</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно отзыва -->
+    <div id="review-modal" class="review-modal">
+        <div class="review-modal-content">
+            <span class="close-review-modal">&times;</span>
+            <h3>Залишити відгук про <span id="review-product-name"></span></h3>
+            <div class="rating-input">
+                <p>Оцінка:</p>
+                <div class="stars">
+                    <i class="far fa-star" data-rating="1"></i>
+                    <i class="far fa-star" data-rating="2"></i>
+                    <i class="far fa-star" data-rating="3"></i>
+                    <i class="far fa-star" data-rating="4"></i>
+                    <i class="far fa-star" data-rating="5"></i>
+                </div>
+                <span class="rating-text">Оберіть кількість зірок</span>
+            </div>
+            <div class="form-group">
+
+нелвикс, [23.12.2025 17:34]
+<label for="review-title">Заголовок відгуку</label>
+                <input type="text" id="review-title" placeholder="Короткий заголовок">
+            </div>
+            <div class="form-group">
+                <label for="review-text">Текст відгуку</label>
+                <textarea id="review-text" rows="4" placeholder="Поділіться враженнями про товар..."></textarea>
+            </div>
+            <button id="submit-review-btn" class="submit-review-btn">Опублікувати відгук</button>
+            <p class="auth-demo-note">Цей відгук з'явиться лише на цій сторінці та збережеться до оновлення.</p>
+        </div>
+    </div>
+
+    <!-- Основная структура сайта -->
+    <header class="header">
+        <div class="container">
+            <div class="header-inner">
+                <div class="logo">
+                    <a href="#">
+                        <i class="fas fa-laptop-code"></i>
+                        <span class="logo-text">Tech<span class="logo-highlight">Store</span></span>
+                        <span class="logo-subtitle">Demo</span>
+                    </a>
+                </div>
+                
+                <div class="search-container">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="search-input" placeholder="Пошук товарів...">
+                        <button id="search-btn">Знайти</button>
+                    </div>
+                    <div id="search-results" class="search-results"></div>
+                </div>
+                
+                <div class="header-actions">
+                    <div class="action-item" id="wishlist-btn">
+                        <i class="far fa-heart"></i>
+                        <span class="action-text">Обране</span>
+                        <span id="wishlist-count" class="count-badge">0</span>
+                    </div>
+                    
+                    <div class="action-item" id="cart-btn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="action-text">Кошик</span>
+                        <span id="cart-count" class="count-badge">0</span>
+                    </div>
+                    
+                    <div class="action-item" id="auth-btn">
+                        <i class="far fa-user"></i>
+                        <span class="action-text" id="auth-text">Увійти</span>
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="navbar">
+                <ul class="nav-menu">
+                    <li><a href="#" class="nav-link active">Головна</a></li>
+                    <li><a href="#laptops" class="nav-link">Ноутбуки</a></li>
+                    <li><a href="#phones" class="nav-link">Смартфони</a></li>
+                    <li><a href="#tablets" class="nav-link">Планшети</a></li>
+                    <li><a href="#audio" class="nav-link">Аудіо</a></li>
+                    <li><a href="#home-tech" class="nav-link">Побутова техніка</a></li>
+                    <li><a href="#gadgets" class="nav-link">Гаджети</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Боковая панель корзины -->
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-sidebar-header">
+            <h3><i class="fas fa-shopping-cart"></i> Ваш кошик</h3>
+            <span class="close-cart">&times;</span>
+        </div>
+        <div id="cart-items" class="cart-items">
+            <!-- Товары будут добавляться сюда динамически -->
+            <div class="empty-cart">
+                <i class="fas fa-shopping-basket"></i>
+                <p>Ваш кошик порожній</p>
+            </div>
+        </div>
+        <div class="cart-sidebar-footer">
+            <div class="cart-total">
+                <span>Загальна сума:</span>
+                <span id="cart-total-price">0 ₴</span>
+            </div>
+            <button id="checkout-btn" class="checkout-btn">Оформити замовлення</button>
